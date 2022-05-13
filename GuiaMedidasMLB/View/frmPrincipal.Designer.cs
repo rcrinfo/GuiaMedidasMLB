@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.dataGridEspecificacoes = new System.Windows.Forms.DataGridView();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridDomain = new System.Windows.Forms.DataGridView();
             this.domain_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,13 +49,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numQuantidadeResultado = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dataGridEspecificacoes = new System.Windows.Forms.DataGridView();
+            this.btnObterGuia = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridEspecificacoes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDomain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantidadeResultado)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridEspecificacoes)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -69,6 +72,7 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel2.BackColor = System.Drawing.Color.Gainsboro;
+            this.panel2.Controls.Add(this.btnObterGuia);
             this.panel2.Controls.Add(this.dataGridEspecificacoes);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.panel3);
@@ -84,6 +88,53 @@
             this.panel2.Size = new System.Drawing.Size(1182, 582);
             this.panel2.TabIndex = 0;
             // 
+            // dataGridEspecificacoes
+            // 
+            this.dataGridEspecificacoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridEspecificacoes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dataGridEspecificacoes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridEspecificacoes.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridEspecificacoes.Enabled = false;
+            this.dataGridEspecificacoes.Location = new System.Drawing.Point(595, 14);
+            this.dataGridEspecificacoes.Name = "dataGridEspecificacoes";
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridEspecificacoes.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridEspecificacoes.RowHeadersVisible = false;
+            this.dataGridEspecificacoes.Size = new System.Drawing.Size(574, 505);
+            this.dataGridEspecificacoes.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label3.Location = new System.Drawing.Point(13, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(182, 25);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Encontrar Dominio";
+            // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -98,14 +149,14 @@
             // 
             this.dataGridDomain.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridDomain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridDomain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridDomain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridDomain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.domain_id,
@@ -230,36 +281,21 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Descritivo do Item:";
             // 
-            // label3
+            // btnObterGuia
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label3.Location = new System.Drawing.Point(13, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(182, 25);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Encontrar Dominio";
-            // 
-            // dataGridEspecificacoes
-            // 
-            this.dataGridEspecificacoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridEspecificacoes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridEspecificacoes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridEspecificacoes.Enabled = false;
-            this.dataGridEspecificacoes.Location = new System.Drawing.Point(600, 14);
-            this.dataGridEspecificacoes.Name = "dataGridEspecificacoes";
-            this.dataGridEspecificacoes.RowHeadersVisible = false;
-            this.dataGridEspecificacoes.Size = new System.Drawing.Size(569, 555);
-            this.dataGridEspecificacoes.TabIndex = 10;
+            this.btnObterGuia.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnObterGuia.Enabled = false;
+            this.btnObterGuia.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.btnObterGuia.FlatAppearance.BorderSize = 0;
+            this.btnObterGuia.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnObterGuia.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnObterGuia.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.btnObterGuia.Location = new System.Drawing.Point(595, 529);
+            this.btnObterGuia.Name = "btnObterGuia";
+            this.btnObterGuia.Size = new System.Drawing.Size(574, 40);
+            this.btnObterGuia.TabIndex = 11;
+            this.btnObterGuia.Text = "Obter Guia de Medida";
+            this.btnObterGuia.UseVisualStyleBackColor = false;
             // 
             // frmPrincipal
             // 
@@ -273,9 +309,9 @@
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridEspecificacoes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridDomain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numQuantidadeResultado)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridEspecificacoes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -298,6 +334,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn attributes;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridEspecificacoes;
+        private System.Windows.Forms.Button btnObterGuia;
     }
 }
 
