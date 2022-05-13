@@ -93,6 +93,7 @@
     <Compile Include="DTO\BRAND.cs" />
     <Compile Include="DTO\dtoConfig.cs" />
     <Compile Include="DTO\dtoConfigXML.cs" />
+    <Compile Include="DTO\dtoTechnical.cs" />
     <Compile Include="DTO\GENDER.cs" />
     <Compile Include="VG.cs" />
     <Compile Include="View\frmPrincipal.cs">

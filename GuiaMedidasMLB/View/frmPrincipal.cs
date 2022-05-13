@@ -24,7 +24,7 @@ namespace GuiaMedidasMLB
         {
             InitializeComponent();
 
-            if(!File.Exists(Application.StartupPath + @"\config.json"))
+            if (!File.Exists(Application.StartupPath + @"\config.json"))
             {
                 var dto = new dtoConfig();
                 dto.path_file_config = null;
@@ -46,7 +46,7 @@ namespace GuiaMedidasMLB
                 var json = File.ReadAllText(Application.StartupPath + @"\config.json");
                 var dto = JsonConvert.DeserializeObject<dtoConfig>(json);
 
-                if(dto.path_file_config == null)
+                if (dto.path_file_config == null)
                 {
                     MessageBox.Show("Configure o arquivo [config.json] na pasta da aplicação", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                     Environment.Exit(0);
@@ -57,13 +57,13 @@ namespace GuiaMedidasMLB
                 var dto_config_xml = bll.Get(dto.path_file_config);
                 VG.AccessToken = dto_config_xml.tk_accessToken;
             }
-        }      
+        }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            
 
-           
+
+
 
 
             var body = new
@@ -115,13 +115,16 @@ namespace GuiaMedidasMLB
 
             var obj_result = JsonConvert.DeserializeObject<object>(result);
 
-           // MessageBox.Show(result);
+            // MessageBox.Show(result);
 
             dataGridDomain.DataSource = obj_result;
         }
 
         private async void dataGridDomain_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            var dto = new dtoTechnical();
+            List<dtoTechnical> obj = new List<dtoTechnical>();
+
             if (e.RowIndex == -1)
             {
                 return;
@@ -135,24 +138,114 @@ namespace GuiaMedidasMLB
             var result = response.Content;
 
             var obj_result = JsonConvert.DeserializeObject<object>(result);
-
-
             dynamic objeto = JObject.Parse(result);
 
             foreach (dynamic spec in objeto.input.groups)
             {
                 foreach (dynamic spec_components in spec.components)
                 {
-                    if(spec_components.component == "COMBO")
+                    if (spec_components.component == "COMBO")
                     {
                         foreach (dynamic spec_attributes in spec_components.attributes)
                         {
                             if (spec_attributes.id == "BRAND")
                             {
+                                dto = new dtoTechnical();
+                                dto.id_technical = "0";
+                                dto.description = "Marca";
+                                obj.Add(dto);
+
                                 foreach (dynamic spec_values in spec_attributes.values)
                                 {
                                     var id = spec_values.id;
                                     var name = spec_values.name;
+
+                                    dto = new dtoTechnical();
+                                    dto.id_technical = id.ToString();
+                                    dto.description = "   " + name.ToString();
+                                    dto.type = "BRAND";
+                                    obj.Add(dto);
+                                }
+                            }
+
+                            if (spec_attributes.id == "GENDER")
+                            {
+                                dto = new dtoTechnical();
+                                dto.id_technical = "1";
+                                dto.description = "Gênero";
+                                obj.Add(dto);
+
+                                foreach (dynamic spec_values in spec_attributes.values)
+                                {
+                                    var id = spec_values.id;
+                                    var name = spec_values.name;
+
+                                    dto = new dtoTechnical();
+                                    dto.id_technical = id.ToString();
+                                    dto.description = "   " + name.ToString();
+                                    dto.type = "GENDER";
+                                    obj.Add(dto);
+                                }
+                            }
+
+                            if (spec_attributes.id == "AGE_GROUP")
+                            {
+                                dto = new dtoTechnical();
+                                dto.id_technical = "2";
+                                dto.description = "Idade";
+                                obj.Add(dto);
+
+                                foreach (dynamic spec_values in spec_attributes.values)
+                                {
+                                    var id = spec_values.id;
+                                    var name = spec_values.name;
+
+                                    dto = new dtoTechnical();
+                                    dto.id_technical = id.ToString();
+                                    dto.description = "   " + name.ToString();
+                                    dto.type = "AGE_GROUP";
+                                    obj.Add(dto);
+                                }
+                            }
+
+
+                            if (spec_attributes.id == "FABRIC_DESIGN")
+                            {
+                                dto = new dtoTechnical();
+                                dto.id_technical = "3";
+                                dto.description = "Desenho de Fabrica";
+                                obj.Add(dto);
+
+                                foreach (dynamic spec_values in spec_attributes.values)
+                                {
+                                    var id = spec_values.id;
+                                    var name = spec_values.name;
+
+                                    dto = new dtoTechnical();
+                                    dto.id_technical = id.ToString();
+                                    dto.description = "   " + name.ToString();
+                                    dto.type = "FABRIC_DESIGN";
+                                    obj.Add(dto);
+                                }
+                            }
+
+                            if (spec_attributes.id == "SIZE")
+                            {
+                                dto = new dtoTechnical();
+                                dto.id_technical = "4";
+                                dto.description = "Tamanho";
+                                obj.Add(dto);
+
+                                foreach (dynamic spec_values in spec_attributes.values)
+                                {
+                                    var id = spec_values.id;
+                                    var name = spec_values.name;
+
+                                    dto = new dtoTechnical();
+                                    dto.id_technical = id.ToString();
+                                    dto.description = "   " + name.ToString();
+                                    dto.type = "SIZE";
+                                    obj.Add(dto);
                                 }
                             }
                         }
@@ -160,8 +253,32 @@ namespace GuiaMedidasMLB
                 }
             }
 
-            dataGridEspecificacoes.DataSource = obj_result;
+            var col = new DataGridViewCheckBoxColumn();
+            col.Name = "Coluna";
+            col.HeaderText = "Selecionado";
+            col.FalseValue = "1";
+            col.TrueValue = "0";
+            col.CellTemplate.Value = false;
+            col.CellTemplate.Style.NullValue = true;
+
+            dataGridEspecificacoes.Columns.Insert(0, col);
+            dataGridEspecificacoes.DataSource = obj;
             dataGridEspecificacoes.Enabled = true;
+            dataGridEspecificacoes.Columns[0].HeaderText = "Selecionado";
+            dataGridEspecificacoes.Columns[1].HeaderText = "Código";
+            dataGridEspecificacoes.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridEspecificacoes.Columns[2].HeaderText = "Descrição";
+            dataGridEspecificacoes.Columns[3].Visible = false;
+            btnObterGuia.Enabled = true;
+
+            foreach (DataGridViewRow dgvr in dataGridEspecificacoes.Rows)
+            {
+                if (int.Parse(dgvr.Cells[1].Value.ToString()) >= 0 && int.Parse(dgvr.Cells[1].Value.ToString()) <= 10)
+                {
+                    dgvr.DefaultCellStyle.BackColor = Color.Blue;
+                    dgvr.DefaultCellStyle.ForeColor = Color.White;
+                }
+            }
         }
     }
 }
