@@ -20,6 +20,8 @@ namespace GuiaMedidasMLB
 {
     public partial class frmPrincipal : Form
     {
+        public static bool isGridLoad { get; set; }
+        public static string domain_id_product { get; set; }
         public frmPrincipal()
         {
             InitializeComponent();
@@ -132,6 +134,8 @@ namespace GuiaMedidasMLB
 
             var codigo_dominio = dataGridDomain.Rows[e.RowIndex].Cells[0].Value.ToString();
 
+            domain_id_product = codigo_dominio;
+
             var request = new RestRequest($"https://api.mercadolibre.com/domains/{codigo_dominio}/technical_specs");
             var client = new RestClient();
             var response = await client.GetAsync(request);
@@ -162,7 +166,7 @@ namespace GuiaMedidasMLB
 
                                     dto = new dtoTechnical();
                                     dto.id_technical = id.ToString();
-                                    dto.description = "   " + name.ToString();
+                                    dto.description = "     " + name.ToString();
                                     dto.type = "BRAND";
                                     obj.Add(dto);
                                 }
@@ -182,7 +186,7 @@ namespace GuiaMedidasMLB
 
                                     dto = new dtoTechnical();
                                     dto.id_technical = id.ToString();
-                                    dto.description = "   " + name.ToString();
+                                    dto.description = "     " + name.ToString();
                                     dto.type = "GENDER";
                                     obj.Add(dto);
                                 }
@@ -202,7 +206,7 @@ namespace GuiaMedidasMLB
 
                                     dto = new dtoTechnical();
                                     dto.id_technical = id.ToString();
-                                    dto.description = "   " + name.ToString();
+                                    dto.description = "     " + name.ToString();
                                     dto.type = "AGE_GROUP";
                                     obj.Add(dto);
                                 }
@@ -223,7 +227,7 @@ namespace GuiaMedidasMLB
 
                                     dto = new dtoTechnical();
                                     dto.id_technical = id.ToString();
-                                    dto.description = "   " + name.ToString();
+                                    dto.description = "     " + name.ToString();
                                     dto.type = "FABRIC_DESIGN";
                                     obj.Add(dto);
                                 }
@@ -243,7 +247,7 @@ namespace GuiaMedidasMLB
 
                                     dto = new dtoTechnical();
                                     dto.id_technical = id.ToString();
-                                    dto.description = "   " + name.ToString();
+                                    dto.description = "     " + name.ToString();
                                     dto.type = "SIZE";
                                     obj.Add(dto);
                                 }
@@ -253,15 +257,19 @@ namespace GuiaMedidasMLB
                 }
             }
 
-            var col = new DataGridViewCheckBoxColumn();
-            col.Name = "Coluna";
-            col.HeaderText = "Selecionado";
-            col.FalseValue = "1";
-            col.TrueValue = "0";
-            col.CellTemplate.Value = false;
-            col.CellTemplate.Style.NullValue = true;
-
-            dataGridEspecificacoes.Columns.Insert(0, col);
+            if (!isGridLoad)
+            {
+                var col = new DataGridViewCheckBoxColumn();
+                col.Name = "Coluna";
+                col.HeaderText = "Selecionado";
+                col.FalseValue = "0";
+                col.TrueValue = "0";
+                col.CellTemplate.Value = false;
+                col.CellTemplate.Style.NullValue = false;
+                dataGridEspecificacoes.Columns.Insert(0, col);
+                isGridLoad = true;
+            }
+            
             dataGridEspecificacoes.DataSource = obj;
             dataGridEspecificacoes.Enabled = true;
             dataGridEspecificacoes.Columns[0].HeaderText = "Selecionado";
@@ -269,6 +277,10 @@ namespace GuiaMedidasMLB
             dataGridEspecificacoes.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridEspecificacoes.Columns[2].HeaderText = "Descrição";
             dataGridEspecificacoes.Columns[3].Visible = false;
+
+            dataGridEspecificacoes.Columns[1].ReadOnly = true;
+            dataGridEspecificacoes.Columns[2].ReadOnly = true;
+            dataGridEspecificacoes.Columns[3].ReadOnly = true;
             btnObterGuia.Enabled = true;
 
             foreach (DataGridViewRow dgvr in dataGridEspecificacoes.Rows)
@@ -279,6 +291,55 @@ namespace GuiaMedidasMLB
                     dgvr.DefaultCellStyle.ForeColor = Color.White;
                 }
             }
+
+            dataGridEspecificacoes.CurrentCell.Selected = Focus();
+            btnObterGuia.Focus();
+        }
+
+        private void frmPrincipal_Load(object sender, EventArgs e)
+        {
+            this.Text = "Guia de Medidas - Mercado Livre Brasil - " + Application.ProductVersion;
+        }
+
+        private void txtDescritivoItem_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+                btn_buscar_dominio.Focus();
+        }
+
+        private async void btnObterGuia_Click(object sender, EventArgs e)
+        {
+            List<dtoTechnical> listAttributes = new List<dtoTechnical>();
+            foreach (DataGridViewRow row in dataGridEspecificacoes.Rows)
+            {
+                if (!string.IsNullOrEmpty(row.Cells[0].Value.ToString()))
+                {
+                    var dto = new dtoTechnical();
+                    dto.description = row.Cells[3].Value.ToString();
+                    dto.id_technical = row.Cells[2].Value.ToString();
+                    dto.type = row.Cells[4].Value.ToString();
+                    listAttributes.Add(dto);
+                }
+            }
+
+            var body = new
+            {
+                seller_id = VG.IdClient,
+                site_id = "MLB",
+                domain_id = domain_id_product.Replace("MLB-", string.Empty),
+                attributes = new object[] {
+
+                    new { id = "BRAND", values = new object[] { new { id = "150271" } } },
+                    new { id = "GENDER", values = new object[] { new { name = "Mulher" } } }
+                }
+            };
+
+            var client = new RestClient();
+            var request = new RestRequest($"https://api.mercadolibre.com/catalog/charts/search?access_token=" + VG.AccessToken, Method.Post)
+                .AddHeader("Content-Type", "application/json")
+                .AddJsonBody(body);
+
+            var responser = await client.ExecuteAsync(request);
         }
     }
 }
