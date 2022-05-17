@@ -1,5 +1,6 @@
 ﻿using GuiaMedidasMLB.BLL;
 using GuiaMedidasMLB.DTO;
+using GuiaMedidasMLB.View;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -11,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,20 +56,17 @@ namespace GuiaMedidasMLB
                     Environment.Exit(0);
                 }
 
+                dto.path_file_config = dto.path_file_config.Replace(@"|", @"\");
                 VG.PathFileConfig = dto.path_file_config;
 
                 var dto_config_xml = bll.Get(dto.path_file_config);
                 VG.AccessToken = dto_config_xml.tk_accessToken;
+                VG.IdClient = dto_config_xml.vendedor_id;
             }
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-
-
-
-
-
             var body = new
             {
                 seller_id = VG.IdClient,
@@ -78,6 +77,8 @@ namespace GuiaMedidasMLB
                     new { id = "GENDER", values = new object[] { new { name = "Mulher" } } }
                 }
             };
+
+            var teste = Newtonsoft.Json.JsonConvert.SerializeObject(body);
 
             var clientt = new RestClient();
             var requesttt = new RestRequest($"https://api.mercadolibre.com/catalog/charts/search?access_token=" + VG.AccessToken, Method.Post)
@@ -262,14 +263,12 @@ namespace GuiaMedidasMLB
                 var col = new DataGridViewCheckBoxColumn();
                 col.Name = "Coluna";
                 col.HeaderText = "Selecionado";
-                col.FalseValue = "0";
-                col.TrueValue = "0";
                 col.CellTemplate.Value = false;
                 col.CellTemplate.Style.NullValue = false;
                 dataGridEspecificacoes.Columns.Insert(0, col);
                 isGridLoad = true;
             }
-            
+
             dataGridEspecificacoes.DataSource = obj;
             dataGridEspecificacoes.Enabled = true;
             dataGridEspecificacoes.Columns[0].HeaderText = "Selecionado";
@@ -292,8 +291,11 @@ namespace GuiaMedidasMLB
                 }
             }
 
-            dataGridEspecificacoes.CurrentCell.Selected = Focus();
-            btnObterGuia.Focus();
+            if (obj.Count > 0)
+            {
+                dataGridEspecificacoes.CurrentCell.Selected = Focus();
+                btnObterGuia.Focus();
+            }
         }
 
         private void frmPrincipal_Load(object sender, EventArgs e)
@@ -321,15 +323,18 @@ namespace GuiaMedidasMLB
             {
                 if (row.Cells[0].Value != null)
                 {
-                    var dto = new dtoTechnical();
-                    dto.description = row.Cells[2].Value.ToString();
-                    dto.id_technical = row.Cells[1].Value.ToString();
-                    dto.type = row.Cells[3].Value.ToString();
-                    listAttributes.Add(dto);
+                    if (Convert.ToBoolean(row.Cells[0].Value) == true)
+                    {
+                        var dto = new dtoTechnical();
+                        dto.description = row.Cells[2].Value.ToString();
+                        dto.id_technical = row.Cells[1].Value.ToString();
+                        dto.type = row.Cells[3].Value.ToString();
+                        listAttributes.Add(dto);
+                    }
                 }
             }
 
-            foreach(var attribute in listAttributes)
+            foreach (var attribute in listAttributes)
             {
                 switch (attribute.type)
                 {
@@ -348,32 +353,32 @@ namespace GuiaMedidasMLB
                     case "SIZE":
                         listObjectSize.Add(new { id = attribute.id_technical });
                         break;
-                }              
+                }
             }
 
             if (listObjectBrand.Count > 0)
             {
-                listObject.Add(new { id = "BRAND", values = new object[] { listObjectBrand } });
+                listObject.Add(new { id = "BRAND", values = listObjectBrand });
             }
 
-            if (listObjectBrand.Count > 0)
+            if (listObjectGender.Count > 0)
             {
-                listObject.Add(new { id = "GENDER", values = new object[] { listObjectGender } });
+                listObject.Add(new { id = "GENDER", values = listObjectGender });
             }
 
-            if (listObjectBrand.Count > 0)
+            if (listObjectAgeGroup.Count > 0)
             {
-                listObject.Add(new { id = "AGE_GROUP", values = new object[] { listObjectAgeGroup } });
+                listObject.Add(new { id = "AGE_GROUP", values = listObjectAgeGroup });
             }
 
-            if (listObjectBrand.Count > 0)
+            if (listObjectFabricDesing.Count > 0)
             {
-                listObject.Add(new { id = "FABRIC_DESIGN", values = new object[] { listObjectFabricDesing } });
+                listObject.Add(new { id = "FABRIC_DESIGN", values = listObjectFabricDesing });
             }
 
-            if (listObjectBrand.Count > 0)
+            if (listObjectSize.Count > 0)
             {
-                listObject.Add(new { id = "SIZE", values = new object[] { listObjectSize } });
+                listObject.Add(new { id = "SIZE", values = listObjectSize });
             }
 
             var body = new
@@ -381,7 +386,7 @@ namespace GuiaMedidasMLB
                 seller_id = VG.IdClient,
                 site_id = "MLB",
                 domain_id = domain_id_product.Replace("MLB-", string.Empty),
-                attributes = new object[] { listObject }
+                attributes = listObject
             };
 
             var client = new RestClient();
@@ -390,6 +395,45 @@ namespace GuiaMedidasMLB
                 .AddJsonBody(body);
 
             var response = await client.ExecuteAsync(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed)
+            {
+                dynamic responseObj = JObject.Parse(response.Content);
+
+                string codigo = "";
+
+                //loop no obj com a lista de clientes
+                foreach (dynamic item in responseObj.charts)
+                {
+                    foreach (dynamic subItem in item.rows)
+                    {
+                        codigo = subItem.id;
+                        break;
+                    }
+                    break;
+                }
+
+                var form = new frmExibirCodigo(codigo);
+                form.ShowDialog();
+            }
+            else
+            {
+                string json = FormatJson(response.Content);
+
+                var form = new frmMensagemErro(json);
+                form.ShowDialog();
+            }
+        }
+
+        public static string FormatJson(string uglyJson)
+        {
+            var options = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
+
+            var jsonElement = System.Text.Json.JsonSerializer.Deserialize<JsonElement>(uglyJson);
+            return System.Text.Json.JsonSerializer.Serialize(jsonElement, options);
         }
     }
 }

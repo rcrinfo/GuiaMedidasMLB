@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.Sharp, Version=5.15.4.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.5.15.4\lib\net472\FontAwesome.Sharp.dll</HintPath>
@@ -96,6 +99,18 @@
     <Compile Include="DTO\dtoTechnical.cs" />
     <Compile Include="DTO\GENDER.cs" />
     <Compile Include="VG.cs" />
+    <Compile Include="View\frmExibirCodigo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmExibirCodigo.Designer.cs">
+      <DependentUpon>frmExibirCodigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmMensagemErro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmMensagemErro.Designer.cs">
+      <DependentUpon>frmMensagemErro.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\frmPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +119,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="View\frmExibirCodigo.resx">
+      <DependentUpon>frmExibirCodigo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\frmMensagemErro.resx">
+      <DependentUpon>frmMensagemErro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -67,3 +67,5 @@ D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csproj.C
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csproj.CopyComplete
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.exe
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.pdb
+D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.View.frmMensagemErro.resources
+D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.View.frmExibirCodigo.resources
