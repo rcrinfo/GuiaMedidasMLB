@@ -310,16 +310,70 @@ namespace GuiaMedidasMLB
         private async void btnObterGuia_Click(object sender, EventArgs e)
         {
             List<dtoTechnical> listAttributes = new List<dtoTechnical>();
+            List<object> listObject = new List<object>();
+            List<object> listObjectBrand = new List<object>();
+            List<object> listObjectGender = new List<object>();
+            List<object> listObjectAgeGroup = new List<object>();
+            List<object> listObjectFabricDesing = new List<object>();
+            List<object> listObjectSize = new List<object>();
+
             foreach (DataGridViewRow row in dataGridEspecificacoes.Rows)
             {
-                if (!string.IsNullOrEmpty(row.Cells[0].Value.ToString()))
+                if (row.Cells[0].Value != null)
                 {
                     var dto = new dtoTechnical();
-                    dto.description = row.Cells[3].Value.ToString();
-                    dto.id_technical = row.Cells[2].Value.ToString();
-                    dto.type = row.Cells[4].Value.ToString();
+                    dto.description = row.Cells[2].Value.ToString();
+                    dto.id_technical = row.Cells[1].Value.ToString();
+                    dto.type = row.Cells[3].Value.ToString();
                     listAttributes.Add(dto);
                 }
+            }
+
+            foreach(var attribute in listAttributes)
+            {
+                switch (attribute.type)
+                {
+                    case "BRAND":
+                        listObjectBrand.Add(new { id = attribute.id_technical });
+                        break;
+                    case "GENDER":
+                        listObjectGender.Add(new { id = attribute.id_technical });
+                        break;
+                    case "AGE_GROUP":
+                        listObjectAgeGroup.Add(new { id = attribute.id_technical });
+                        break;
+                    case "FABRIC_DESIGN":
+                        listObjectFabricDesing.Add(new { id = attribute.id_technical });
+                        break;
+                    case "SIZE":
+                        listObjectSize.Add(new { id = attribute.id_technical });
+                        break;
+                }              
+            }
+
+            if (listObjectBrand.Count > 0)
+            {
+                listObject.Add(new { id = "BRAND", values = new object[] { listObjectBrand } });
+            }
+
+            if (listObjectBrand.Count > 0)
+            {
+                listObject.Add(new { id = "GENDER", values = new object[] { listObjectGender } });
+            }
+
+            if (listObjectBrand.Count > 0)
+            {
+                listObject.Add(new { id = "AGE_GROUP", values = new object[] { listObjectAgeGroup } });
+            }
+
+            if (listObjectBrand.Count > 0)
+            {
+                listObject.Add(new { id = "FABRIC_DESIGN", values = new object[] { listObjectFabricDesing } });
+            }
+
+            if (listObjectBrand.Count > 0)
+            {
+                listObject.Add(new { id = "SIZE", values = new object[] { listObjectSize } });
             }
 
             var body = new
@@ -327,11 +381,7 @@ namespace GuiaMedidasMLB
                 seller_id = VG.IdClient,
                 site_id = "MLB",
                 domain_id = domain_id_product.Replace("MLB-", string.Empty),
-                attributes = new object[] {
-
-                    new { id = "BRAND", values = new object[] { new { id = "150271" } } },
-                    new { id = "GENDER", values = new object[] { new { name = "Mulher" } } }
-                }
+                attributes = new object[] { listObject }
             };
 
             var client = new RestClient();
@@ -339,7 +389,7 @@ namespace GuiaMedidasMLB
                 .AddHeader("Content-Type", "application/json")
                 .AddJsonBody(body);
 
-            var responser = await client.ExecuteAsync(request);
+            var response = await client.ExecuteAsync(request);
         }
     }
 }
