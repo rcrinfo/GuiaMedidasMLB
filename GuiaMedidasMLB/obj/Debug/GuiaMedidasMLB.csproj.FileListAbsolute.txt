@@ -59,7 +59,6 @@ D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\bin\Debug\System.Text.Encodings.W
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\bin\Debug\System.Text.Json.xml
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\bin\Debug\System.ValueTuple.xml
-D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csprojAssemblyReference.cache
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.frmPrincipal.resources
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.Properties.Resources.resources
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csproj.GenerateResource.cache
@@ -69,3 +68,5 @@ D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.exe
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.pdb
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.View.frmMensagemErro.resources
 D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.View.frmExibirCodigo.resources
+D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csproj.AssemblyReference.cache
+D:\Fontes\GitHub\GuiaMedidasMLB\GuiaMedidasMLB\obj\Debug\GuiaMedidasMLB.csproj.SuggestedBindingRedirects.cache
